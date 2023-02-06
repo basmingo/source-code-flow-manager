@@ -1,0 +1,8 @@
+rootProject.name = 'source-code-flow-manager'
+
+include 'source-code-flow-manager-core'
+include 'source-code-flow-manager-data-access'
+include 'source-code-flow-manager-audit-logging'
+include 'source-code-flow-manager-gitlab'
+include 'source-code-flow-manager-application'
+
