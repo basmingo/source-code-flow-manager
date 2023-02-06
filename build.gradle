@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management' version "1.1.0" apply false
+    id 'org.springframework.boot' version '3.0.2' apply false
+}
+
+group 'com.iprody.source.code.flow.manager'
+version '1.0.0-SNAPSHOT'
+
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}
