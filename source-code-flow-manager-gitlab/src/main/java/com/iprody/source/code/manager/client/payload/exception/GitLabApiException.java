@@ -5,4 +5,7 @@ public class GitLabApiException extends RuntimeException{
     public GitLabApiException(String message) {
         super(message);
     }
+    public GitLabApiException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 }
