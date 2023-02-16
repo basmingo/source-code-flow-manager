@@ -5,4 +5,5 @@ include 'source-code-flow-manager-data-access'
 include 'source-code-flow-manager-audit-logging'
 include 'source-code-flow-manager-gitlab'
 include 'source-code-flow-manager-application'
-
+include 'source-code-flow-manager-core:project-domain'
+findProject(':source-code-flow-manager-core:project-domain')?.name = 'project-domain'
