@@ -2,9 +2,11 @@ package com.iprody.source.code.flow.manager.pipeline_job_api;
 
 import com.iprody.source.code.flow.manager.pipeline_job_api.domain.Job;
 import com.iprody.source.code.manager.client.payload.exception.GitLabApiException;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+@Service
 public class PipelineJobAPI {
 
     private final WebClient webClient;

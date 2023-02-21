@@ -5,9 +5,11 @@ import com.iprody.source.code.manager.client.payload.exception.GitLabApiExceptio
 import com.iprody.source.code.manager.client.payload.request.ProjectCreationRequest;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Service
 public class ProjectApiClient {
     private final WebClient webClient;
 

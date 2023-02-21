@@ -3,9 +3,11 @@ package com.iprody.source.code.flow.manager.branch_api;
 import com.iprody.source.code.flow.manager.GitLabApiException;
 import com.iprody.source.code.flow.manager.branch_api.entity.Branch;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Service
 public class BranchApi {
 
     public WebClient webClient;

@@ -1,4 +1,4 @@
-package com.iprody.source.code.flow.manager.utils;
+package com.iprody.source.code.flow.manager.communication;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -1,4 +1,4 @@
-package com.iprody.source.code.flow.manager.utils;
+package com.iprody.source.code.flow.manager.communication;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
