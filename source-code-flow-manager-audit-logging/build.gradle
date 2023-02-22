@@ -1,0 +1,13 @@
+dependencies {
+    // Spring dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    // Third-party dependencies
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Test dependencies
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
