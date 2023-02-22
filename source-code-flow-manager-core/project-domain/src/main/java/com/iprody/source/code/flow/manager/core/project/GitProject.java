@@ -1,9 +1,9 @@
 package com.iprody.source.code.flow.manager.core.project;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-
 import java.net.URI;
 import java.time.Instant;
 
@@ -13,7 +13,9 @@ import java.time.Instant;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class GitProject {
+
     /**
      * ID of the project.
      */
@@ -35,6 +37,16 @@ public class GitProject {
      * Description for the project.
      */
     private String description;
+
+    /**
+     * Enable visibility of a new project.
+     */
+    private boolean isVisible;
+
+    /**
+     * Base branch of a new project.
+     */
+    private String baseBranch;
 
     /**
      * Date and time of the project creation.
@@ -78,7 +90,7 @@ public class GitProject {
     private boolean artifactRegistryEnabled;
 
     /**
-     * Fully defined path to git repository.
+     * Fully defined path to the git repository.
      * The path should be a valid HTTP URL.
      */
     private URI httpUrlToRepo;
@@ -88,4 +100,9 @@ public class GitProject {
      * The path should be a valid HTTP URL.
      */
     private URI readmeUrl;
+
+    /**
+     * Enable Issues for a new project.
+     */
+    private boolean isIssuesEnabled;
 }
