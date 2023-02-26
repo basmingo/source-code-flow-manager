@@ -4,8 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SourceCodeFlowManagerApplication {
-    public static void main(String[] args) {
+public final class SourceCodeFlowManagerApplication {
+
+    private SourceCodeFlowManagerApplication() {
+
+    }
+
+    /**
+     * Entry point of the service.
+     * @param args startup arguments
+     */
+    public static void main(final String[] args) {
         SpringApplication.run(SourceCodeFlowManagerApplication.class, args);
     }
 }
