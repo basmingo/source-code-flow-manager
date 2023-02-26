@@ -128,7 +128,7 @@
         <module name="RecordTypeParameterName"/>
         <module name="LambdaParameterName"/>
         <module name="PatternVariableName"/>
-<!--        Fix it-->
+        <!-- Fix it-->
 <!--        <module name="RecordComponentName"/>-->
 
         <!-- Checks for imports                              -->
@@ -224,7 +224,7 @@
         <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
         <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
         <module name="UnnecessarySemicolonInTryWithResources"/>
-<!--        Fix it-->
+        <!-- Fix it-->
 <!--        <module name="UnusedLocalVariable"/>-->
         <module name="VariableDeclarationUsageDistance"/>
 
