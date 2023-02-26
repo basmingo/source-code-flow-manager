@@ -1,15 +1,15 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'org.liquibase.gradle'
-}
-
-version '1.0.0-SNAPSHOT'
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Spring dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Third-party dependencies
     implementation 'org.liquibase:liquibase-core'
+
+    // Test dependencies
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+bootJar {
+    enabled = true
 }

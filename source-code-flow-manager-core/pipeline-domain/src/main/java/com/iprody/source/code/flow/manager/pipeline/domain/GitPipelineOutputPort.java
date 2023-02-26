@@ -1,5 +1,6 @@
 package com.iprody.source.code.flow.manager.pipeline.domain;
 
+import com.iprody.source.code.flow.manager.project.domain.GitProject;
 import reactor.core.publisher.Mono;
 
 /**
