@@ -23,7 +23,17 @@ import reactor.test.StepVerifier;
 class ProjectApiClientTest {
 
     private MockWebServer mockWebServer;
+
     private ProjectApiClient projectApiClient;
+
+    private final String headerToken = "PRIVATE-TOKEN";
+
+    private final String token = "token";
+
+    private final String projectName = "testProject";
+
+    private final String errorMessageCreateProject = "Something went wrong during gitlab operation "
+            + "[create project] execution. Response: ";
 
     @BeforeEach
     @SneakyThrows
@@ -31,10 +41,10 @@ class ProjectApiClientTest {
         mockWebServer = new MockWebServer();
         mockWebServer.start();
 
-        String baseUrl = mockWebServer.url("/").url().toString();
-        WebClient client = WebClient.builder()
+        final String baseUrl = mockWebServer.url("/").url().toString();
+        final WebClient client = WebClient.builder()
                 .baseUrl(baseUrl)
-                .defaultHeader("PRIVATE-TOKEN", "token")
+                .defaultHeader(headerToken, token)
                 .build();
 
         projectApiClient = new ProjectApiClient(client);
@@ -50,55 +60,59 @@ class ProjectApiClientTest {
     @Test
     @SneakyThrows
     void shouldCreateNewProject_onBehalfOfUser_thatEncodedInPrivateToken() {
+        final int status = 200;
+
         mockWebServer.enqueue(
-                new MockResponse().setResponseCode(200)
+                new MockResponse().setResponseCode(status)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(new ObjectMapper().writeValueAsString(getTestProjectRequest()))
         );
 
-        Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
-        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+        final Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
+        final RecordedRequest recordedRequest = mockWebServer.takeRequest();
 
         StepVerifier.create(projectMono)
-                .expectNextMatches(project -> project.getName().equals("testProject"))
+                .expectNextMatches(project -> project.getName().equals(projectName))
                 .verifyComplete();
 
         Assertions.assertEquals("POST", recordedRequest.getMethod());
         Assertions.assertEquals("/projects", recordedRequest.getPath());
-        Assertions.assertEquals("token", recordedRequest.getHeader("PRIVATE-TOKEN"));
+        Assertions.assertEquals(token, recordedRequest.getHeader(headerToken));
     }
 
     @Test
     @SneakyThrows
     void shouldNotCreateNewProject_becauseTheProjectAlreadyExists_soResponseIs400() {
+        final int status = 400;
+
         mockWebServer.enqueue(
-                new MockResponse().setResponseCode(400)
+                new MockResponse().setResponseCode(status)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(String.valueOf(HttpStatus.BAD_REQUEST))
         );
 
-        Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
+        final Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
 
         StepVerifier.create(projectMono)
-                .expectErrorMessage("Something went wrong during gitlab operation " +
-                        "[create project] execution. Response: " + HttpStatus.BAD_REQUEST)
+                .expectErrorMessage(errorMessageCreateProject + HttpStatus.BAD_REQUEST)
                 .verify();
     }
 
     @Test
     @SneakyThrows
     void shouldNotCreateNewProject_becauseBadRequest_soResponseIs400() {
+        final int status = 400;
+
         mockWebServer.enqueue(
-                new MockResponse().setResponseCode(400)
+                new MockResponse().setResponseCode(status)
                         .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .setBody(String.valueOf(HttpStatus.BAD_REQUEST))
         );
 
-        Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
+        final Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
 
         StepVerifier.create(projectMono)
-                .expectErrorMessage("Something went wrong during gitlab operation " +
-                        "[create project] execution. Response: " + HttpStatus.BAD_REQUEST)
+                .expectErrorMessage(errorMessageCreateProject + HttpStatus.BAD_REQUEST)
                 .verify();
     }
 
@@ -106,40 +120,44 @@ class ProjectApiClientTest {
     @Test
     @SneakyThrows
     void shouldNotCreateNewProject_becauseOfWrongAuthToken_soResponseIs401() {
+        final int status = 401;
+
         mockWebServer.enqueue(
-                new MockResponse().setResponseCode(401)
+                new MockResponse().setResponseCode(status)
                         .setBody(String.valueOf(HttpStatus.UNAUTHORIZED))
         );
 
-        Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
+        final Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
 
         StepVerifier.create(projectMono)
-                .expectErrorMessage("Something went wrong during gitlab operation " +
-                        "[create project] execution. Response: " + HttpStatus.UNAUTHORIZED)
+                .expectErrorMessage(errorMessageCreateProject + HttpStatus.UNAUTHORIZED)
                 .verify();
     }
 
     @Test
     @SneakyThrows
     void shouldNotCreateNewProject_becauseInternalServerError_soResponseIs500() {
+        final int status = 500;
+
         mockWebServer.enqueue(
-                new MockResponse().setResponseCode(500)
+                new MockResponse().setResponseCode(status)
                         .setBody(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR))
         );
 
-        Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
+        final Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
 
         StepVerifier.create(projectMono)
-                .expectErrorMessage("Something went wrong during gitlab operation " +
-                        "[create project] execution. Response: " + HttpStatus.INTERNAL_SERVER_ERROR)
+                .expectErrorMessage(errorMessageCreateProject + HttpStatus.INTERNAL_SERVER_ERROR)
                 .verify();
     }
 
     private ProjectCreationRequest getTestProjectRequest() {
-        ProjectCreationRequest request = new ProjectCreationRequest();
-        request.setName("testProject");
+        final int namespaceId = 13000000;
+
+        final ProjectCreationRequest request = new ProjectCreationRequest();
+        request.setName(projectName);
         request.setVisibility("private");
-        request.setNamespaceId(13000000);
+        request.setNamespaceId(namespaceId);
         return request;
     }
 }

@@ -17,34 +17,34 @@ import lombok.NonNull;
 @RequiredArgsConstructor
 public class GitProjectInitialData {
     /**
-     * Name of a new project
+     * Name of a new project.
      */
     @NonNull
     private String name;
 
     /**
      * Namespace of a new project (e.g. organisation, group, team, etc.)
-     * provides one place to organize related projects
+     * provides one place to organize related projects.
      */
     private String namespace;
 
     /**
-     * Enable visibility of a new project
+     * Enable visibility of a new project.
      */
     private boolean visibility;
 
     /**
-     * Base branch of a new project
+     * Base branch of a new project.
      */
     private String baseBranch;
 
     /**
-     * Enable Large File Storage for a new project
+     * Enable Large File Storage for a new project.
      */
     private boolean isLfsEnabled;
 
     /**
-     * Enable Issues for a new project
+     * Enable Issues for a new project.
      */
     private boolean isIssuesEnabled;
 }

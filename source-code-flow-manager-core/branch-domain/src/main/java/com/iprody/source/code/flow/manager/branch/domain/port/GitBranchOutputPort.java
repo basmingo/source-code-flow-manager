@@ -14,6 +14,7 @@ public interface GitBranchOutputPort {
      * Creates a new branch.Uses the data from the received object as a parameter.
      *
      * @return GitBranch data of a newly created project or null if GitBranch doesn't exist.
+     * @param gitBranchInitialData
      */
     Mono<GitBranch> createBranch(GitBranchInitialData gitBranchInitialData);
 
@@ -21,6 +22,7 @@ public interface GitBranchOutputPort {
      * Finds a new branch.Uses the data from the received object as a parameter.
      *
      * @return GitBranch data of a newly created project or null if GitBranch doesn't exist.
+     * @param gitBranchInitialData
      */
     Mono<GitBranch> findBranch(GitBranchInitialData gitBranchInitialData);
 

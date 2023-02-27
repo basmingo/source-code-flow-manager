@@ -5,7 +5,7 @@ import reactor.core.publisher.Mono;
 /**
  * Interface represents a set of operations for manipulating over
  * a git project (aka git repository) that established remotely
- * on git-vendor (aka Gitlab, Github, etc.) premises
+ * on git-vendor (aka Gitlab, Github, etc.) premises.
  */
 public interface GitProjectOutputPort {
     /**

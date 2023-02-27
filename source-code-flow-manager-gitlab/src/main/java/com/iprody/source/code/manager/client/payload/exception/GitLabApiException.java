@@ -1,11 +1,22 @@
 package com.iprody.source.code.manager.client.payload.exception;
 
-public class GitLabApiException extends RuntimeException{
+/**
+ * The class represents a custom exception for handle Gitlab API's exceptions.
+ */
+public class GitLabApiException extends RuntimeException {
 
-    public GitLabApiException(String message) {
-        super(message);
+    /**
+     * @param exceptionMessage description of exception.
+     */
+    public GitLabApiException(final String exceptionMessage) {
+        super(exceptionMessage);
     }
-    public GitLabApiException(String message, Throwable throwable) {
-        super(message, throwable);
+
+    /**
+     * @param exceptionMessage description of exception.
+     * @param throwable        throwable object.
+     */
+    public GitLabApiException(final String exceptionMessage, final Throwable throwable) {
+        super(exceptionMessage, throwable);
     }
 }

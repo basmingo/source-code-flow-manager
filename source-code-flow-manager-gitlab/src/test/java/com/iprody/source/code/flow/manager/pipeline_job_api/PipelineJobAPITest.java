@@ -7,7 +7,12 @@ import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.jupiter.api.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +34,16 @@ class PipelineJobAPITest {
     private PipelineJobAPI jobAPI;
 
     private final Integer projectId = 1;
+
     private final Integer pipelineId = 1;
+
+    private final String jobsPath = "/{projectId}/pipelines/{pipelineId}/jobs";
+
+    private final String headerContentType = "Content-Type";
+
+    private final String contentType = "application/json";
+
+    private final String errorMessage = "Error during executing pipeline jobs of project: ";
 
     @BeforeEach
     @SneakyThrows
@@ -37,18 +51,18 @@ class PipelineJobAPITest {
         mockBackEnd = new MockWebServer();
         mockBackEnd.start();
 
-        URI uriApi = new DefaultUriBuilderFactory()
+        final URI uriApi = new DefaultUriBuilderFactory()
                 .builder()
-                .path("/{projectId}/pipelines/{pipelineId}/jobs")
+                .path(jobsPath)
                 .build(projectId, pipelineId);
 
         mockBackEnd.url(uriApi.getPath());
 
         objectMapper = new ObjectMapper();
 
-        String baseUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
+        final String baseUrl = String.format("http://localhost:%s", mockBackEnd.getPort());
 
-        WebClient client = WebClient.builder()
+        final WebClient client = WebClient.builder()
                 .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
@@ -63,13 +77,13 @@ class PipelineJobAPITest {
     }
 
     public List<Job> data() {
-        Job mockJob1 = new Job();
+        final Job mockJob1 = new Job();
         mockJob1.setName("Job1: build");
 
-        Job mockJob2 = new Job();
+        final Job mockJob2 = new Job();
         mockJob2.setName("Job2: test");
 
-        Job mockJob3 = new Job();
+        final Job mockJob3 = new Job();
         mockJob2.setName("Job3: deploy");
 
         return Arrays.asList(mockJob1, mockJob2, mockJob3);
@@ -78,23 +92,23 @@ class PipelineJobAPITest {
     @Test
     @SneakyThrows
     void whenGetAllPipelineJobs_thenCorrectPipelineJobs() {
-        List<Job> testJobs = data();
+        final List<Job> testJobs = data();
 
         mockBackEnd.enqueue(new MockResponse()
                 .setBody(objectMapper.writeValueAsString(testJobs))
-                .addHeader("Content-Type", "application/json"));
+                .addHeader(headerContentType, contentType));
 
-        Flux<Job> pipelineJobs = jobAPI.getPipelineJobs(projectId, pipelineId);
+        final Flux<Job> pipelineJobs = jobAPI.getPipelineJobs(projectId, pipelineId);
 
         StepVerifier.create(pipelineJobs)
                 .thenConsumeWhile(testJobs::contains)
                 .verifyComplete();
 
-        RecordedRequest recordedRequest = mockBackEnd.takeRequest();
+        final RecordedRequest recordedRequest = mockBackEnd.takeRequest();
 
-        URI uriToApi = new DefaultUriBuilderFactory()
+        final URI uriToApi = new DefaultUriBuilderFactory()
                 .builder()
-                .path("/{projectId}/pipelines/{pipelineId}/jobs")
+                .path(jobsPath)
                 .build(projectId, pipelineId);
 
         Assertions.assertEquals("GET", recordedRequest.getMethod());
@@ -105,9 +119,9 @@ class PipelineJobAPITest {
     @SneakyThrows
     void whenGetAllPipelineJobs_thenEmptyPipelineJobs() {
         mockBackEnd.enqueue(new MockResponse()
-                .addHeader("Content-Type", "application/json"));
+                .addHeader(headerContentType, contentType));
 
-        Flux<Job> emptyPipelineJobs = Flux.empty();
+        final Flux<Job> emptyPipelineJobs = Flux.empty();
 
         StepVerifier.create(emptyPipelineJobs)
                 .expectNextCount(0)
@@ -115,11 +129,15 @@ class PipelineJobAPITest {
     }
 
     @Test
-    void shouldThrowGitLabApiException_whenGettingAllAvailableJobs_butRequestCannotBeAuthorized_viaPassedPrivateTokenAsHeader() {
-        mockBackEnd.enqueue(new MockResponse().setResponseCode(401)
+    @DisplayName("shouldThrowGitLabApiException_whenGettingAllAvailableJobs_"
+            + "butRequestCannotBeAuthorized_viaPassedPrivateTokenAsHeader")
+    void throwException_whenGettingJobs() {
+        final int status = 401;
+
+        mockBackEnd.enqueue(new MockResponse().setResponseCode(status)
                 .setBody(String.valueOf(HttpStatus.UNAUTHORIZED)));
 
-        Flux<Job> jobsByApi = jobAPI.getPipelineJobs(pipelineId, pipelineId);
+        final Flux<Job> jobsByApi = jobAPI.getPipelineJobs(pipelineId, pipelineId);
 
         StepVerifier.create(jobsByApi)
                 .expectError(GitLabApiException.class)
@@ -128,42 +146,48 @@ class PipelineJobAPITest {
 
     @Test
     void shouldThrowPGitLabApiException_whenGettingAllAvailableJobs_butGettingNotFound_viaPassedWrongProjectId() {
-        mockBackEnd.enqueue(new MockResponse().setResponseCode(404)
+        final int status = 404;
+
+        mockBackEnd.enqueue(new MockResponse().setResponseCode(status)
                 .setBody(String.valueOf(HttpStatus.NOT_FOUND)));
 
-        Integer notExistPipelineId = 2;
+        final Integer notExistPipelineId = 2;
 
-        Flux<Job> jobsByApi = jobAPI.getPipelineJobs(projectId, notExistPipelineId);
+        final Flux<Job> jobsByApi = jobAPI.getPipelineJobs(projectId, notExistPipelineId);
 
         StepVerifier.create(jobsByApi).verifyErrorMatches(
-                e -> e instanceof GitLabApiException &&
-                        e.getMessage().equals("Error occurred while executing Fetch all available pipeline jobs of Gitlab Project: " + projectId));
+                e -> e instanceof GitLabApiException
+                        && e.getMessage().equals(errorMessage + projectId));
     }
 
     @Test
     void shouldThrowPGitLabApiException_whenGettingAllAvailableJobs_butGettingNotFound_viaPassedWrongPipelineId() {
-        mockBackEnd.enqueue(new MockResponse().setResponseCode(404)
+        final int status = 404;
+
+        mockBackEnd.enqueue(new MockResponse().setResponseCode(status)
                 .setBody(String.valueOf(HttpStatus.NOT_FOUND)));
 
-        Integer notExistProjectId = 2;
+        final Integer notExistProjectId = 2;
 
-        Flux<Job> jobsByApi = jobAPI.getPipelineJobs(notExistProjectId, pipelineId);
+        final Flux<Job> jobsByApi = jobAPI.getPipelineJobs(notExistProjectId, pipelineId);
 
         StepVerifier.create(jobsByApi).verifyErrorMatches(
-                e -> e instanceof GitLabApiException &&
-                        e.getMessage().equals("Error occurred while executing Fetch all available pipeline jobs of Gitlab Project: " + notExistProjectId));
+                e -> e instanceof GitLabApiException
+                        && e.getMessage().equals(errorMessage + notExistProjectId));
 
     }
 
     @Test
     void shouldNotReturnPipelineJobs_becauseOfWrongUrl_soResponseCodeIs500() {
-        mockBackEnd.enqueue(new MockResponse().setResponseCode(500)
+        final int status = 500;
+
+        mockBackEnd.enqueue(new MockResponse().setResponseCode(status)
                 .setBody(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR)));
 
-        Flux<Job> jobsByApi = jobAPI.getPipelineJobs(projectId, pipelineId);
+        final Flux<Job> jobsByApi = jobAPI.getPipelineJobs(projectId, pipelineId);
 
         StepVerifier.create(jobsByApi).verifyErrorMatches(
-                e -> e instanceof GitLabApiException &&
-                        e.getMessage().equals("Error occurred while executing Fetch all available pipeline jobs of Gitlab Project: " + projectId));
+                e -> e instanceof GitLabApiException
+                        && e.getMessage().equals(errorMessage + projectId));
     }
 }

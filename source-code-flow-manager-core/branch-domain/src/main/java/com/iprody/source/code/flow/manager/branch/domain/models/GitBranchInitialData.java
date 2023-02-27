@@ -1,6 +1,10 @@
 package com.iprody.source.code.flow.manager.branch.domain.models;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.NonNull;
 
 /**
  * Class that represents a set of necessary data for creating and finding a git branch (aka git repository)
@@ -13,21 +17,21 @@ import lombok.*;
 public class GitBranchInitialData {
 
     /**
-     * ID of the project
+     * ID of the project.
      */
-    String projectId;
+    private String projectId;
     /**
-     * Path of the project
+     * Path of the project.
      */
-    String projectPath;
+    private String projectPath;
     /**
-     * Name of the project
+     * Name of the project.
      */
     @NonNull
-    String name;
+    private String name;
     /**
-     * ref of the project
+     * Ref of the project.
      */
-    String ref;
+    private String ref;
 
 }

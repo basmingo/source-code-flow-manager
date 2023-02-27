@@ -9,83 +9,83 @@ import java.time.Instant;
 
 /**
  * Class represents a git project and its vital parts in a vendor
- * related implementation (e.g. Gitlab, Github)
+ * related implementation (e.g. Gitlab, Github).
  */
 @Getter
 @Setter
 public class GitProject {
     /**
-     * ID of the project
+     * ID of the project.
      */
     private long id;
 
     /**
-     * Name of the project
+     * Name of the project.
      */
     @NonNull
     private String name;
 
     /**
      * Namespace of the project (e.g. organisation, group, team, etc.)
-     * provides one place to organize related projects
+     * provides one place to organize related projects.
      */
     private String namespace;
 
     /**
-     * Description for the project
+     * Description for the project.
      */
     private String description;
 
     /**
-     * Date and time of the project creation
+     * Date and time of the project creation.
      */
     private Instant createdAT;
 
     /**
-     * Person ID of the project creator
+     * Person ID of the project creator.
      */
     private long creatorID;
 
     /**
-     * Project owner name
+     * Project owner name.
      */
     private String owner;
 
     /**
-     * Enable Large File Storage (LFS) fot the project
+     * Enable Large File Storage (LFS) fot the project.
      */
     private boolean lfsEnabled;
 
     /**
-     * Enable Wiki pages for the project
+     * Enable Wiki pages for the project.
      */
     private boolean wikiEnabled;
 
     /**
-     * Enable CI/CD for the project
+     * Enable CI/CD for the project.
      */
     private boolean ciCdEnabled;
 
     /**
      * Enable of a container registry on git-vendor side
-     * to store container images for the project
+     * to store container images for the project.
      */
     private boolean containerRegistryEnabled;
 
     /**
-     * Enable artifact registry for the project
+     * Enable artifact registry for the project.
      */
     private boolean artifactRegistryEnabled;
 
     /**
      * Fully defined path to git repository.
-     * The path should be a valid HTTP URL
+     * The path should be a valid HTTP URL.
      */
     private URI httpUrlToRepo;
 
     /**
      * Fully defined path to the project ReadMe file.
-     * The path should be a valid HTTP URL
+     * The path should be a valid HTTP URL.
      */
     private URI readmeUrl;
 }
