@@ -11,7 +11,6 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -56,7 +55,6 @@ class ProjectApiClientTest {
         mockWebServer.shutdown();
     }
 
-    @Disabled
     @Test
     @SneakyThrows
     void shouldCreateNewProject_onBehalfOfUser_thatEncodedInPrivateToken() {
@@ -69,12 +67,12 @@ class ProjectApiClientTest {
         );
 
         final Mono<Project> projectMono = projectApiClient.createProject(getTestProjectRequest());
-        final RecordedRequest recordedRequest = mockWebServer.takeRequest();
 
         StepVerifier.create(projectMono)
                 .expectNextMatches(project -> project.getName().equals(projectName))
                 .verifyComplete();
 
+        final RecordedRequest recordedRequest = mockWebServer.takeRequest();
         Assertions.assertEquals("POST", recordedRequest.getMethod());
         Assertions.assertEquals("/projects", recordedRequest.getPath());
         Assertions.assertEquals(token, recordedRequest.getHeader(headerToken));
