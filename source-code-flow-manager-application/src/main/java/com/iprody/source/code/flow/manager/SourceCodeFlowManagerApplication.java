@@ -4,11 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public final class SourceCodeFlowManagerApplication {
-
-    private SourceCodeFlowManagerApplication() {
-
-    }
+public class SourceCodeFlowManagerApplication {
 
     /**
      * Entry point of the service.
