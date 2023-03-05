@@ -8,8 +8,8 @@ import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -22,15 +22,10 @@ import reactor.test.StepVerifier;
 class ProjectApiTest {
 
     private MockWebServer mockWebServer;
-
     private ProjectApi projectApi;
-
     private final String headerToken = "PRIVATE-TOKEN";
-
     private final String token = "token";
-
     private final String projectName = "testProject";
-
     private final String errorMessageCreateProject = "Something went wrong during Gitlab operation "
             + "[create project] execution. Response: ";
 
@@ -73,9 +68,13 @@ class ProjectApiTest {
                 .verifyComplete();
 
         final RecordedRequest recordedRequest = mockWebServer.takeRequest();
-        Assertions.assertEquals("POST", recordedRequest.getMethod());
-        Assertions.assertEquals("/projects", recordedRequest.getPath());
-        Assertions.assertEquals(token, recordedRequest.getHeader(headerToken));
+
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(recordedRequest)
+                .returns("POST", RecordedRequest::getMethod)
+                .returns("/projects", RecordedRequest::getPath);
+        softAssertions.assertThat(recordedRequest.getHeader(headerToken)).isEqualTo(token);
+        softAssertions.assertAll();
     }
 
     @Test

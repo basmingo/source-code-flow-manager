@@ -8,8 +8,8 @@ import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,21 +28,13 @@ import java.util.List;
 class PipelineJobApiTest {
 
     private static MockWebServer mockBackEnd;
-
     private ObjectMapper objectMapper;
-
     private PipelineJobApi jobAPI;
-
     private final Integer projectId = 1;
-
     private final Integer pipelineId = 1;
-
     private final String jobsPath = "/{projectId}/pipelines/{pipelineId}/jobs";
-
     private final String headerContentType = "Content-Type";
-
     private final String contentType = "application/json";
-
     private final String errorMessage = "Error during executing pipeline jobs of project: ";
 
     @BeforeEach
@@ -111,8 +103,11 @@ class PipelineJobApiTest {
                 .path(jobsPath)
                 .build(projectId, pipelineId);
 
-        Assertions.assertEquals("GET", recordedRequest.getMethod());
-        Assertions.assertEquals(uriToApi.getPath(), recordedRequest.getPath());
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(recordedRequest)
+                .returns("GET", RecordedRequest::getMethod)
+                .returns(uriToApi.getPath(), RecordedRequest::getPath);
+        softAssertions.assertAll();
     }
 
     @Test

@@ -7,8 +7,8 @@ import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -22,23 +22,14 @@ class BranchApiTest {
 
     private MockWebServer mockWebServer;
     private BranchApi branchApi;
-
     private final String branchName = "testBranch";
-
     private final String branchRef = "main";
-
     private final int projectId = 1;
-
     private final String errorMessage = "Something went wrong during Gitlab operation ";
-
     private final String errorMessageCreateBranch = "[create branch] execution. Response: ";
-
     private final String errorMessageGetBranch = "[get branch by name] execution. Response: ";
-
     private final String headerContentType = "Content-Type";
-
     private final String contentType = "application/json";
-
     private final int duration = 3;
 
     @BeforeEach
@@ -74,9 +65,12 @@ class BranchApiTest {
                 .verifyComplete();
 
         final RecordedRequest recordedRequest = mockWebServer.takeRequest();
-        Assertions.assertEquals("POST", recordedRequest.getMethod());
-        Assertions.assertEquals("/1/repository/branches?branch=testBranch&ref=main",
-                recordedRequest.getPath());
+
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(recordedRequest)
+                .returns("POST", RecordedRequest::getMethod)
+                .returns("/1/repository/branches?branch=testBranch&ref=main", RecordedRequest::getPath);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -179,8 +173,12 @@ class BranchApiTest {
                 .verifyComplete();
 
         final RecordedRequest recordedRequest = mockWebServer.takeRequest();
-        Assertions.assertEquals("GET", recordedRequest.getMethod());
-        Assertions.assertEquals("/1/repository/branches/testBranch", recordedRequest.getPath());
+
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(recordedRequest)
+                .returns("GET", RecordedRequest::getMethod)
+                .returns("/1/repository/branches/testBranch", RecordedRequest::getPath);
+        softAssertions.assertAll();
     }
 
     @Test
