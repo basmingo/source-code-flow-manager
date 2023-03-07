@@ -2,11 +2,13 @@ package com.iprody.source.code.flow.manager.gitlab.api.project;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Class represents a project and its vital parts on inner API side.
  */
 @Getter
+@Setter
 public class Project {
 
     /**

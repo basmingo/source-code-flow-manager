@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
  */
 public interface GitProjectOutputPort {
     /**
-     * Creates a new project using data from the received GitProjectInitialData as a parameter.
+     * Creates a new project using data from the received GitProject as a parameter.
      *
      * @param gitProject consists of configured data to create a new project in a remote repository
      * @return GitProject relates to create a new project in a remote repository

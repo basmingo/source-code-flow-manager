@@ -15,4 +15,5 @@ dependencies {
 
     // Dependencies from another modules
     implementation project(':source-code-flow-manager-core:member-domain')
+    implementation project(':source-code-flow-manager-core:project-domain')
 }
