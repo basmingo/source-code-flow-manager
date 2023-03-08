@@ -13,3 +13,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+springdoc:
+  swagger-ui:
+    path: /swagger-doc/swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    groups:
+      enabled: true
+    path: /swagger-doc/v3/api-docs

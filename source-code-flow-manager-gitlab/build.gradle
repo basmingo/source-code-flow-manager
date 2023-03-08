@@ -1,6 +1,12 @@
 dependencies {
+    // SCFM dependencies
+    implementation project(':source-code-flow-manager-core:project-domain')
+    implementation project(':source-code-flow-manager-core:member-domain')
+
     // Spring dependencies
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // Third-party dependencies
     compileOnly 'org.projectlombok:lombok'
@@ -10,10 +16,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.squareup.okhttp3:mockwebserver'
     testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.mockito:mockito-inline'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-
-    // Dependencies from another modules
-    implementation project(':source-code-flow-manager-core:member-domain')
-    implementation project(':source-code-flow-manager-core:project-domain')
 }

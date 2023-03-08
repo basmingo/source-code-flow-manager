@@ -47,10 +47,10 @@ class ProjectEngineTest {
         when(gitProjectResponseMapper.map(any())).thenReturn(Mono.just(gitResponse));
 
         final var engine = new ProjectEngine(gitProjectRequestMapper, gitProjectResponseMapper, gitProjectOutputPort);
-        engine.createProject(Mono.just(new GitProjectRequestTestImplementation()));
+        engine.createProject(new GitProjectRequestTestImplementation());
 
         StepVerifier
-                .create(engine.createProject(Mono.just(new GitProjectRequestTestImplementation())))
+                .create(engine.createProject(new GitProjectRequestTestImplementation()))
                 .expectNext(gitResponse)
                 .verifyComplete();
     }

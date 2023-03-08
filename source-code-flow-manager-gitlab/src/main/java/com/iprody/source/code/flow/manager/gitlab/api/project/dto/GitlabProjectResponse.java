@@ -1,106 +1,81 @@
-package com.iprody.source.code.flow.manager.core.project;
+package com.iprody.source.code.flow.manager.gitlab.api.project.dto;
 
+import com.iprody.source.code.flow.manager.core.project.GitProjectResponse;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.net.URI;
 import java.time.Instant;
 
 /**
- * Class represents a git project and its vital parts in a vendor
- * related implementation (e.g. Gitlab, Github).
+ * It's a DTO response that contains the data of the GitProject in Gitlab.
  */
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class GitProject {
-
+@AllArgsConstructor
+@EqualsAndHashCode
+@Schema(description = "Initial data to create a project")
+public class GitlabProjectResponse implements GitProjectResponse {
     /**
      * ID of the project.
      */
     private long id;
-
     /**
      * Name of the project.
      */
     private String name;
-
     /**
-     * Namespace of the project (e.g. organisation, group, team, etc.)
-     * provides one place to organize related projects.
-     */
-    private String namespace;
-
-    /**
-     * Description for the project.
+     * Description of the project.
      */
     private String description;
-
     /**
-     * Enable visibility of a new project.
+     * Namespace of the project.
+     * It provides one place in Gitlab to organize some related to each other projects.
      */
-    private boolean isVisible;
-
+    private String namespace;
     /**
-     * Base branch of a new project.
+     * Time of the project creation.
      */
-    private String baseBranch;
-
+    private Instant createdAt;
     /**
-     * Date and time of the project creation.
+     * OwnerId of the project.
+     * It is stored in the GitAdministrator repository.
      */
-    private Instant createdAT;
-
-    /**
-     * Person ID of the project creator.
-     */
-    private long creatorID;
-
-    /**
-     * Project owner name.
-     */
-    private String owner;
-
+    private long ownerId;
     /**
      * Enable Large File Storage (LFS) fot the project.
      */
     private boolean lfsEnabled;
-
     /**
      * Enable Wiki pages for the project.
      */
     private boolean wikiEnabled;
-
     /**
      * Enable CI/CD for the project.
      */
     private boolean ciCdEnabled;
-
     /**
      * Enable of a container registry on git-vendor side
      * to store container images for the project.
      */
     private boolean containerRegistryEnabled;
-
     /**
      * Enable artifact registry for the project.
      */
     private boolean artifactRegistryEnabled;
-
     /**
      * Fully defined path to the git repository.
      * The path should be a valid HTTP URL.
      */
     private URI httpUrlToRepo;
-
     /**
      * Fully defined path to the project ReadMe file.
      * The path should be a valid HTTP URL.
      */
     private URI readmeUrl;
-
-    /**
-     * Enable Issues for a new project.
-     */
-    private boolean isIssuesEnabled;
 }

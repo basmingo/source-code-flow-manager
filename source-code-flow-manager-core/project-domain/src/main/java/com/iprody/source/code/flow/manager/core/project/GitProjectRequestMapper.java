@@ -7,15 +7,16 @@ import reactor.core.publisher.Mono;
  * Mapping transforms implementation of GitProjectRequest
  * into the raw GitProject object for the future handling
  * on the concrete implementation of git-vendor side (Gitlab, Github etc... ).
+ *
+ * @param <T> should be specified by concrete vendor's  project request class which implements GitProjectRequest
  */
-public interface GitProjectRequestMapper {
+public interface GitProjectRequestMapper<T extends GitProjectRequest> {
 
     /**
-     * @param request represents a Mono, which should contain
-     *                an instance of an object, that extends abstract GitProjectRequest.
-     * @param <T>     Parameter, that represents a name of class, which should extend
-     *                GitProjectRequest.
-     * @return a Mono, which contains a raw GitProject for the future handling.
+     * Given a Mono of type T, return a Mono of type GitProject.
+     *
+     * @param request The incoming request.
+     * @return A Mono<GitProject>
      */
-    <T extends GitProjectRequest> Mono<GitProject> map(Mono<T> request);
+    Mono<GitProject> map(Mono<T> request);
 }
