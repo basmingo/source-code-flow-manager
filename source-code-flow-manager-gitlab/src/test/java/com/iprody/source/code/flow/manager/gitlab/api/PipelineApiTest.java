@@ -1,6 +1,8 @@
-package com.iprody.source.code.flow.manager.gitlab.api.pipeline;
+package com.iprody.source.code.flow.manager.gitlab.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iprody.source.code.flow.manager.gitlab.api.pipeline.GitlabPipeline;
+import com.iprody.source.code.flow.manager.gitlab.api.pipeline.GitlabPipelineApi;
 import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
@@ -19,7 +21,7 @@ import reactor.test.StepVerifier;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class GitlabPipelineApiTest {
+class PipelineApiTest {
 
     private MockWebServer mockWebServer;
     private GitlabPipelineApi pipeLineClient;
