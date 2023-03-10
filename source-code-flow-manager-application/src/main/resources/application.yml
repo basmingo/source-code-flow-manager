@@ -1,5 +1,15 @@
 spring:
-  r2dbc:
-    url: r2dbc:postgresql://localhost:5432/source-code-flow-manager_db
-    username: admin
+  datasource:
+    url: jdbc:postgresql://localhost:5432/source-code-flow-manager_db
+    name: postgres
     password: password
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: db.changelog/db.changelog-master.yaml
+    url: jdbc:postgresql://localhost:5432/source-code-flow-manager_db
+    user: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate

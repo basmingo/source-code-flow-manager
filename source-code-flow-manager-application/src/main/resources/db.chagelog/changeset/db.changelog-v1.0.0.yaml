@@ -1,0 +1,212 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-seq_git_administrators
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: seq_git_administrators
+            startValue: 1
+  - changeSet:
+      id: create-seq_git_providers
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: seq_git_providers
+            startValue: 1
+  - changeSet:
+      id: create-seq_git_credentials
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: seq_git_credentials
+            startValue: 1
+  - changeSet:
+      id: create-seq_git_projects
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 50
+            sequenceName: seq_git_projects
+            startValue: 1
+  - changeSet:
+      id: create-git_administrators-table
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: git_administrators
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+  - changeSet:
+      id: create-git_providers-table
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: git_providers
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+  - changeSet:
+      id: create-git_credentials-table
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: git_credentials
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: secret
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: create-git_projects-table
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: git_projects
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: web_url
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+  - changeSet:
+      id: add-git_administrator_id-column-to-git_credentials
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: git_credentials
+            columns:
+              - column:
+                  name: git_administrator_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: git_administrator_id
+            baseTableName: git_credentials
+            constraintName: FK_PROJECTS_ON_GIT_ADMINISTRATORS
+            referencedColumnNames: id
+            referencedTableName: git_administrators
+  - changeSet:
+      id: add-git_provider_id-column-to-git_credentials
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: git_credentials
+            columns:
+              - column:
+                  name: git_provider_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: git_provider_id
+            baseTableName: git_credentials
+            constraintName: fk_git_providers_on_git_administrators
+            referencedColumnNames: id
+            referencedTableName: git_providers
+  - changeSet:
+      id: add-git_administrator_id-column-to-git_projects
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: projects
+            columns:
+              - column:
+                  name: git_administrator_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: git_administrator_id
+            baseTableName: projects
+            constraintName: fk_projects_on_git_administrators
+            referencedColumnNames: id
+            referencedTableName: git_administrators
+  - changeSet:
+      id: add-git_provider_id-column-to-git_projects
+      author: Aleksei
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addColumn:
+            tableName: projects
+            columns:
+              - column:
+                  name: git_provider_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: git_provider_id
+            baseTableName: projects
+            constraintName: fk_git_providers_on_git_administrators
+            referencedColumnNames: id
+            referencedTableName: git_providers

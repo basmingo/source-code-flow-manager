@@ -1,1 +1,3 @@
 databaseChangelog:
+  - include: # Initial schema
+      file: db.changelog/changeset/db.changelog-v1.0.0.yaml
