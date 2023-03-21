@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Custom annotation marks methods to be logged by LoggingAspect advices.
  */
-@Target(value = ElementType.METHOD)
+@Target(value = {ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface LogOperation {
 

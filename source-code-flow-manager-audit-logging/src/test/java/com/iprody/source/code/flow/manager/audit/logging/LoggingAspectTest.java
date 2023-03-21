@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 /**
  * This class tests the LoggingAspect class.
  */
-@SpringBootTest(classes = {TestClassForLoggingAspect.class, LoggingAspect.class})
+@SpringBootTest(classes = {TestClassForLoggingAspect.class, LoggingAspect.class, AspectConfig.class})
 class LoggingAspectTest {
 
     /**

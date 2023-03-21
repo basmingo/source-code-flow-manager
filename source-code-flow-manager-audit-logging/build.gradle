@@ -1,6 +1,10 @@
 dependencies {
+    // iprody dependencies
+    implementation project(':source-code-flow-manager-data-access')
+
     // Spring dependencies
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // Third-party dependencies
     compileOnly 'org.projectlombok:lombok'
