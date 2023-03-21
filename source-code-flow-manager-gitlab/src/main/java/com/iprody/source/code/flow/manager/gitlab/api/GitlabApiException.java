@@ -1,4 +1,4 @@
-package com.iprody.source.code.flow.manager.gitlab.exception;
+package com.iprody.source.code.flow.manager.gitlab.api;
 
 /**
  * The class represents a custom exception for handle Gitlab API's exceptions.

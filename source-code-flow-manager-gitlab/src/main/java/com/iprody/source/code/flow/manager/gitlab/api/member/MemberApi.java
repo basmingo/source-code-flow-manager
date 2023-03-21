@@ -1,6 +1,6 @@
 package com.iprody.source.code.flow.manager.gitlab.api.member;
 
-import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
+import com.iprody.source.code.flow.manager.gitlab.api.GitlabApiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

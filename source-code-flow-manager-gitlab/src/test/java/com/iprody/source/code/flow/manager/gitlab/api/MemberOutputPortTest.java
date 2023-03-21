@@ -1,11 +1,11 @@
-package com.iprody.source.code.flow.manager.gitlab.output;
+package com.iprody.source.code.flow.manager.gitlab.api;
 
 import com.iprody.source.code.flow.manager.core.member.GitMember;
 import com.iprody.source.code.flow.manager.gitlab.api.member.AccessLevel;
 import com.iprody.source.code.flow.manager.gitlab.api.member.CreatedBy;
 import com.iprody.source.code.flow.manager.gitlab.api.member.Member;
 import com.iprody.source.code.flow.manager.gitlab.api.member.MemberApi;
-import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
+import com.iprody.source.code.flow.manager.gitlab.api.member.MemberOutputPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

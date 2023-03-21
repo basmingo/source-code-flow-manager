@@ -1,9 +1,9 @@
-package com.iprody.source.code.flow.manager.gitlab.api.project.output;
+package com.iprody.source.code.flow.manager.gitlab.api;
 
 import com.iprody.source.code.flow.manager.core.project.GitProject;
+import com.iprody.source.code.flow.manager.gitlab.api.project.GitlabProjectOutputPort;
 import com.iprody.source.code.flow.manager.gitlab.api.project.Project;
 import com.iprody.source.code.flow.manager.gitlab.api.project.ProjectApi;
-import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,6 @@
 package com.iprody.source.code.flow.manager.gitlab.api.pipeline;
 
-import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
+import com.iprody.source.code.flow.manager.gitlab.api.GitlabApiException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;

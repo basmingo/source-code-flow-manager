@@ -1,10 +1,7 @@
-package com.iprody.source.code.flow.manager.gitlab.output;
+package com.iprody.source.code.flow.manager.gitlab.api.member;
 
 import com.iprody.source.code.flow.manager.core.member.GitMember;
 import com.iprody.source.code.flow.manager.core.member.GitMemberOutputPort;
-import com.iprody.source.code.flow.manager.gitlab.api.member.AccessLevel;
-import com.iprody.source.code.flow.manager.gitlab.api.member.Member;
-import com.iprody.source.code.flow.manager.gitlab.api.member.MemberApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

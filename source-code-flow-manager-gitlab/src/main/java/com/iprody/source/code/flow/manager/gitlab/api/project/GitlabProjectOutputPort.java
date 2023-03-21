@@ -1,10 +1,7 @@
-package com.iprody.source.code.flow.manager.gitlab.api.project.output;
+package com.iprody.source.code.flow.manager.gitlab.api.project;
 
 import com.iprody.source.code.flow.manager.core.project.GitProject;
 import com.iprody.source.code.flow.manager.core.project.GitProjectOutputPort;
-import com.iprody.source.code.flow.manager.gitlab.api.project.Project;
-import com.iprody.source.code.flow.manager.gitlab.api.project.ProjectApi;
-import com.iprody.source.code.flow.manager.gitlab.api.project.ProjectCreationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

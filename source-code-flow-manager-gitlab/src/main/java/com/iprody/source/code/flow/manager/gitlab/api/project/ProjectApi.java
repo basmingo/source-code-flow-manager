@@ -1,6 +1,6 @@
 package com.iprody.source.code.flow.manager.gitlab.api.project;
 
-import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
+import com.iprody.source.code.flow.manager.gitlab.api.GitlabApiException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

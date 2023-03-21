@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iprody.source.code.flow.manager.gitlab.api.member.AccessLevel;
 import com.iprody.source.code.flow.manager.gitlab.api.member.Member;
 import com.iprody.source.code.flow.manager.gitlab.api.member.MemberApi;
-import com.iprody.source.code.flow.manager.gitlab.exception.GitlabApiException;
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
