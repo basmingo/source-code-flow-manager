@@ -6,11 +6,12 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
     enabled: true
-    change-log: db.changelog/db.changelog-master.yaml
+    change-log: db/changelog/db.changelog-master.yaml
     url: jdbc:postgresql://localhost:5432/source-code-flow-manager_db
     user: postgres
     password: password
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
     hibernate:
       ddl-auto: validate
 springdoc:
@@ -21,3 +22,19 @@ springdoc:
     groups:
       enabled: true
     path: /swagger-doc/v3/api-docs
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health,liquibase,prometheus
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    liquibase:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true

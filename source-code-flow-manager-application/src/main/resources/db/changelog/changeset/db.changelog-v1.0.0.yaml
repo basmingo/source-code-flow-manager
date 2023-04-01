@@ -178,7 +178,7 @@ databaseChangeLog:
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addColumn:
-            tableName: projects
+            tableName: git_projects
             columns:
               - column:
                   name: git_administrator_id
@@ -187,7 +187,7 @@ databaseChangeLog:
                     nullable: false
         - addForeignKeyConstraint:
             baseColumnNames: git_administrator_id
-            baseTableName: projects
+            baseTableName: git_projects
             constraintName: fk_projects_on_git_administrators
             referencedColumnNames: id
             referencedTableName: git_administrators
@@ -197,7 +197,7 @@ databaseChangeLog:
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
         - addColumn:
-            tableName: projects
+            tableName: git_projects
             columns:
               - column:
                   name: git_provider_id
@@ -206,7 +206,7 @@ databaseChangeLog:
                     nullable: false
         - addForeignKeyConstraint:
             baseColumnNames: git_provider_id
-            baseTableName: projects
+            baseTableName: git_projects
             constraintName: fk_git_providers_on_git_administrators
             referencedColumnNames: id
             referencedTableName: git_providers
